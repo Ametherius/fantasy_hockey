@@ -1,63 +1,132 @@
+"use client";
+import Header from "@/components/header";
+import { createClient } from "@/lib/supabase/client";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Home() {
+  const inputStyle = `border-2 border-black rounded-lg p-2 m-1`;
+  const [teamName, setTeamName] = useState("");
+  const [pick1, setPick1] = useState("");
+  const [pick2, setPick2] = useState("");
+  const [pick3, setPick3] = useState("");
+  const [pick4, setPick4] = useState("");
+  const [pick5, setPick5] = useState("");
+  const [pick6, setPick6] = useState("");
+  const supabase = createClient();
+  const [status, setStatus] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  async function handleSubmission(e) {
+    e.preventDefault();
+    setSubmitting(true);
+    const { error } = await supabase.from("keepers").insert({
+      team_name: teamName.trim(),
+      pick1: pick1.trim() || null,
+      pick2: pick2.trim() || null,
+      pick3: pick3.trim() || null,
+      pick4: pick4.trim() || null,
+      pick5: pick5.trim() || null,
+      pick6: pick6.trim() || null,
+    });
+    setSubmitting(false);
+    setTeamName("");
+    setPick1("");
+    setPick2("");
+    setPick3("");
+    setPick4("");
+    setPick5("");
+    setPick6("");
+
+    if (error) {
+      setStatus({ type: "error", message: error.message });
+    }
+  }
+
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      <Header />
+      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-6 px-26 bg-white dark:bg-black sm:items-start">
+        <div className="bg-white rounded-xl p-1 flex justify-center">
+          <form>
+            <h2 className="font-bold text-center text-2xl p-2 mb-2 w-90">
+              Submit Keepers
+            </h2>
+            <div className="flex-flex-col items-center">
+              <div className="flex justify-center">
+                <input
+                  type="text"
+                  value={teamName}
+                  onChange={(e) => setTeamName(e.target.value)}
+                  className={inputStyle}
+                  placeholder="Team Name"
+                />
+              </div>
+              <div className="flex justify-center">
+                <input
+                  type="text"
+                  value={pick1}
+                  onChange={(e) => setPick1(e.target.value)}
+                  className={inputStyle}
+                  placeholder="Keeper #1"
+                />
+              </div>
+              <div className="flex justify-center">
+                <input
+                  type="text"
+                  value={pick2}
+                  onChange={(e) => setPick2(e.target.value)}
+                  className={inputStyle}
+                  placeholder="Keeper #2"
+                />
+              </div>
+              <div className="flex justify-center">
+                <input
+                  type="text"
+                  value={pick3}
+                  onChange={(e) => setPick3(e.target.value)}
+                  className={inputStyle}
+                  placeholder="Keeper #3"
+                />
+              </div>
+              <div className="flex justify-center">
+                <input
+                  type="text"
+                  value={pick4}
+                  onChange={(e) => setPick4(e.target.value)}
+                  className={inputStyle}
+                  placeholder="Keeper #4"
+                />
+              </div>
+              <div className="flex justify-center">
+                <input
+                  type="text"
+                  value={pick5}
+                  onChange={(e) => setPick5(e.target.value)}
+                  className={inputStyle}
+                  placeholder="Keeper #5"
+                />
+              </div>
+              <div className="flex justify-center">
+                <input
+                  type="text"
+                  value={pick6}
+                  onChange={(e) => setPick6(e.target.value)}
+                  className={inputStyle}
+                  placeholder="Keeper #6"
+                />
+              </div>
+              <div className="flex justify-center my-3">
+                <button
+                  type="submit"
+                  className="bg-black p-3 text-white mt-3 cursor-pointer"
+                  onClick={handleSubmission}
+                >
+                  Submit Keepers
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </main>
     </div>
