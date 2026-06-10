@@ -1,7 +1,10 @@
 "use client";
 import Link from "next/link";
 
-const links = [{ label: "Keepers", href: "/keepers" }];
+const links = [
+  { label: "Home", href: "./" },
+  { label: "Keepers", href: "/keepers" },
+];
 
 export default function Header() {
   return (
@@ -22,7 +25,7 @@ function Navbar() {
           <Link
             key={link.href}
             href={link.href}
-            className="uppercase font-bold hover:border-b-2 hover:border-b-black"
+            className="uppercase font-bold hover:border-b-2 hover:border-b-black m-2"
           >
             {link.label}
           </Link>
