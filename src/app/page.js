@@ -43,17 +43,20 @@ export default function Home() {
     }
   }
 
+  const formGroup = "flex flex-col mx-5 mb-2";
+
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <Header />
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-6 px-26 bg-white dark:bg-black sm:items-start">
-        <div className="bg-white rounded-xl p-1 flex justify-center">
+        <div className="bg-white rounded-xl p-3 mt-5 flex justify-center">
           <form>
             <h2 className="font-bold text-center text-2xl p-2 mb-2 w-90">
               Submit Keepers
             </h2>
             <div className="flex-flex-col items-center">
-              <div className="flex justify-center">
+              <div className={formGroup}>
+                <label>Team Name</label>
                 <input
                   type="text"
                   value={teamName}
@@ -62,58 +65,64 @@ export default function Home() {
                   placeholder="Team Name"
                 />
               </div>
-              <div className="flex justify-center">
+              <div className={formGroup}>
+                <label>Pick 1</label>
                 <input
                   type="text"
                   value={pick1}
                   onChange={(e) => setPick1(e.target.value)}
                   className={inputStyle}
-                  placeholder="Keeper #1"
+                  placeholder="Round - Player Name"
                 />
               </div>
-              <div className="flex justify-center">
+              <div className={formGroup}>
+                <label>Pick 2</label>
                 <input
                   type="text"
                   value={pick2}
                   onChange={(e) => setPick2(e.target.value)}
                   className={inputStyle}
-                  placeholder="Keeper #2"
+                  placeholder="Round - Player Name"
                 />
               </div>
-              <div className="flex justify-center">
+              <div className={formGroup}>
+                <label>Pick 3</label>
                 <input
                   type="text"
                   value={pick3}
                   onChange={(e) => setPick3(e.target.value)}
                   className={inputStyle}
-                  placeholder="Keeper #3"
+                  placeholder="Round - Player Name"
                 />
               </div>
-              <div className="flex justify-center">
+              <div className={formGroup}>
+                <label htmlFor="">Pick 4</label>
                 <input
                   type="text"
                   value={pick4}
                   onChange={(e) => setPick4(e.target.value)}
                   className={inputStyle}
-                  placeholder="Keeper #4"
+                  placeholder="Round - Player Name"
                 />
               </div>
-              <div className="flex justify-center">
+              <div className={formGroup}>
+                <label htmlFor="">Pick 5</label>
                 <input
                   type="text"
                   value={pick5}
                   onChange={(e) => setPick5(e.target.value)}
                   className={inputStyle}
-                  placeholder="Keeper #5"
+                  placeholder="Round - Player Name"
                 />
               </div>
-              <div className="flex justify-center">
+              <div className={formGroup}>
+                <label htmlFor="">Pick 6</label>
                 <input
                   type="text"
                   value={pick6}
                   onChange={(e) => setPick6(e.target.value)}
                   className={inputStyle}
-                  placeholder="Keeper #6"
+                  placeholder="Round - Player Name"
                 />
               </div>
               <div className="flex justify-center my-3">
