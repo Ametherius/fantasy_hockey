@@ -1,3 +1,5 @@
+import "server-only";
+
 const YAHOO_AUTH_URL = "https://api.login.yahoo.com/oauth2/request_auth";
 const YAHOO_TOKEN_URL = "https://api.login.yahoo.com/oauth2/get_token";
 const YAHOO_SCOPE = "fspt-r";

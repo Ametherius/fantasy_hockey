@@ -1,3 +1,5 @@
+import "server-only";
+
 import { cookies } from "next/headers";
 
 const ACCESS_TOKEN_COOKIE = "yahoo_access_token";
@@ -31,15 +33,18 @@ export async function getYahooTokens() {
 
 export async function saveYahooTokens(tokens) {
   const cookieStore = await cookies();
-  const expiresAt = Date.now() + tokens.expires_in * 1000;
+  const expiresIn = tokens.expires_in ?? 3600;
+  const expiresAt = Date.now() + expiresIn * 1000;
+  const existingRefresh = cookieStore.get(REFRESH_TOKEN_COOKIE)?.value;
+  const refreshToken = tokens.refresh_token || existingRefresh;
 
   cookieStore.set(ACCESS_TOKEN_COOKIE, tokens.access_token, {
     ...cookieOptions,
-    maxAge: tokens.expires_in,
+    maxAge: expiresIn,
   });
 
-  if (tokens.refresh_token) {
-    cookieStore.set(REFRESH_TOKEN_COOKIE, tokens.refresh_token, {
+  if (refreshToken) {
+    cookieStore.set(REFRESH_TOKEN_COOKIE, refreshToken, {
       ...cookieOptions,
       maxAge: 60 * 60 * 24 * 365,
     });
@@ -47,7 +52,7 @@ export async function saveYahooTokens(tokens) {
 
   cookieStore.set(EXPIRES_AT_COOKIE, String(expiresAt), {
     ...cookieOptions,
-    maxAge: tokens.expires_in,
+    maxAge: expiresIn,
   });
 }
 

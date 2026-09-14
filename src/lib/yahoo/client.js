@@ -1,8 +1,10 @@
-import YahooFantasy from "yahoo-fantasy";
+import "server-only";
+
 import { refreshYahooTokens } from "./auth";
 import { getYahooTokens, saveYahooTokens } from "./tokens";
 
-export async function getYahooClient() {
+/** Returns a valid Yahoo access token, refreshing if needed. */
+export async function getYahooAccessToken() {
   let tokens = await getYahooTokens();
 
   if (!tokens?.access_token) {
@@ -18,11 +20,5 @@ export async function getYahooClient() {
     tokens = await getYahooTokens();
   }
 
-  const yf = new YahooFantasy(
-    process.env.YAHOO_CLIENT_ID,
-    process.env.YAHOO_CLIENT_SECRET,
-  );
-
-  yf.setUserToken(tokens.access_token);
-  return yf;
+  return tokens?.access_token ?? null;
 }

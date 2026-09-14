@@ -40,7 +40,11 @@ export default function Home() {
     setPick6("");
 
     if (error) {
-      setStatus({ type: "error", message: error.message });
+      setStatus({
+        type: "error",
+        message: `Error submitting keepers: ${error.message}`,
+        code: error.status,
+      });
     } else {
       setStatus({ type: "success", message: "Keepers submitted successfully" });
     }
@@ -143,6 +147,21 @@ export default function Home() {
         {status?.type === "success" && (
           <Modal>
             <p className="m-4 font-bold text-2xl">{status.message}</p>
+            <button
+              type="button"
+              className="bg-black text-white p-2 px-6 font-bold"
+              onClick={() => setStatus(null)}
+            >
+              Close
+            </button>
+          </Modal>
+        )}
+        {status?.type === "error" && (
+          <Modal>
+            <p className="m-4 font-bold text-2xl">
+              `There was an error submitting keepers (${status.code}) $
+              {status.message}`
+            </p>
             <button
               type="button"
               className="bg-black text-white p-2 px-6 font-bold"
