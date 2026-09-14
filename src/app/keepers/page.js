@@ -16,9 +16,9 @@ export default async function Keepers() {
 
   const keeperStyle = `border-b-2 border-gray-700 w-full text-center bg-white p-2`;
   return (
-    <div className="flex flex-col flex-1 items-center justify-center font-sans bg-white dark:bg-black">
+    <div className="flex flex-col flex-1 items-center font-sans bg-white dark:bg-black">
       <Header />
-      <main className="flex flex-1 w-fit max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+      <main className="grid grid-cols-4 w-full h-full py-32 px-16 bg-white dark:bg-black sm:items-start">
         {keepers.map((k) => {
           const pick1 = splitPick(k.pick1);
           const pick2 = splitPick(k.pick2);
@@ -28,36 +28,37 @@ export default async function Keepers() {
           const pick6 = splitPick(k.pick6);
 
           return (
-            <div
-              key={k.id}
-              className="w-full p-2 overflow-y-scroll h-[calc(100vh - 3rem)]"
-            >
-              <div className=" bg-white p-3 flex justify-center border-b-2 border-black">
-                <h1 className="text-black font-bold text-2xl">{k.team_name}</h1>
-              </div>
-              <div className=" bg-gray-700 flex flex-col justify-center items-center">
-                <p className={keeperStyle}>
-                  <strong>({pick1.number}) </strong>
-                  {pick1.name}
-                </p>
-                <p className={keeperStyle}>
-                  <strong>({pick2.number}) </strong>
-                  {pick2.name}
-                </p>
-                <p className={keeperStyle}>
-                  <strong>({pick3.number}) </strong>
-                  {pick3.name}
-                </p>
-                <p className={keeperStyle}>
-                  <strong>({pick4.number}) </strong>
-                  {pick4.name}
-                </p>
-                <p className={keeperStyle}>
-                  <strong>({pick5.number})</strong> {pick5.name}
-                </p>
-                <p className={keeperStyle}>
-                  <strong>({pick6.number})</strong> {pick6.name}
-                </p>
+            <div key={k.id} className="w-full p-2 h-[calc(100vh - 3rem)]">
+              <div className="bg-white blur-xs">
+                <div className=" bg-white p-3 flex justify-center border-b-2 border-black">
+                  <h1 className="text-black font-bold text-2xl">
+                    {k.team_name}
+                  </h1>
+                </div>
+                <div className=" bg-gray-700 flex flex-col justify-center items-center">
+                  <p className={keeperStyle}>
+                    <strong>({pick1.number}) </strong>
+                    {pick1.name}
+                  </p>
+                  <p className={keeperStyle}>
+                    <strong>({pick2.number}) </strong>
+                    {pick2.name}
+                  </p>
+                  <p className={keeperStyle}>
+                    <strong>({pick3.number}) </strong>
+                    {pick3.name}
+                  </p>
+                  <p className={keeperStyle}>
+                    <strong>({pick4.number}) </strong>
+                    {pick4.name}
+                  </p>
+                  <p className={keeperStyle}>
+                    <strong>({pick5.number})</strong> {pick5.name}
+                  </p>
+                  <p className={keeperStyle}>
+                    <strong>({pick6.number})</strong> {pick6.name}
+                  </p>
+                </div>
               </div>
             </div>
           );

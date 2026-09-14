@@ -3,6 +3,7 @@ import Header from "@/components/header";
 import { createClient } from "@/lib/supabase/client";
 import Image from "next/image";
 import { useState } from "react";
+import Modal from "./components/modal";
 
 export default function Home() {
   const inputStyle = `border-2 border-black rounded-lg p-2 m-1`;
@@ -40,6 +41,8 @@ export default function Home() {
 
     if (error) {
       setStatus({ type: "error", message: error.message });
+    } else {
+      setStatus({ type: "success", message: "Keepers submitted successfully" });
     }
   }
 
@@ -137,6 +140,18 @@ export default function Home() {
             </div>
           </form>
         </div>
+        {status?.type === "success" && (
+          <Modal>
+            <p className="m-4 font-bold text-2xl">{status.message}</p>
+            <button
+              type="button"
+              className="bg-black text-white p-2 px-6 font-bold"
+              onClick={() => setStatus(null)}
+            >
+              Close
+            </button>
+          </Modal>
+        )}
       </main>
     </div>
   );
