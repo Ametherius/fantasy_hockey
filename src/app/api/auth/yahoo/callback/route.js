@@ -9,8 +9,12 @@ export async function GET(request) {
   const origin = new URL(request.url).origin;
 
   if (oauthError) {
+    const description = searchParams.get("error_description") || "";
+    const detail = description
+      ? `${oauthError}:${description}`
+      : oauthError;
     return Response.redirect(
-      `${origin}/?yahoo_error=${encodeURIComponent(oauthError)}`,
+      `${origin}/?yahoo_error=${encodeURIComponent(detail)}`,
     );
   }
 
