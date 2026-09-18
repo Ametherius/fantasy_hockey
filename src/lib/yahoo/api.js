@@ -5,9 +5,6 @@ import { YahooNotConnectedError } from "./errors";
 
 const YAHOO_API_BASE = "https://fantasysports.yahooapis.com/fantasy/v2";
 
-const FANTASY_ACCESS_HELP =
-  "Yahoo Fantasy API access is restricted. Apply (or re-bind your App ID) at https://sports.yahoo.com/developer/ — Fantasy Sports is no longer self-serve for most apps.";
-
 export async function yahooGet(path) {
   const accessToken = await getYahooAccessToken();
   if (!accessToken) {
@@ -29,9 +26,16 @@ export async function yahooGet(path) {
   if (!response.ok) {
     const body = await response.text();
 
-    if (response.status === 403) {
+    if (
+      response.status === 403 ||
+      (response.status === 401 &&
+        body.includes("additional_authorization_required"))
+    ) {
       throw new Error(
-        `Yahoo API 403: application not authorized for Fantasy data. ${FANTASY_ACCESS_HELP} Raw: ${body}`,
+        `Yahoo Fantasy API not authorized for this app (${response.status}). ` +
+          `Your OAuth login succeeded, but Yahoo has not granted Fantasy Sports API access. ` +
+          `Apply (or re-bind your App ID) at https://sports.yahoo.com/developer/ — ` +
+          `then reconnect via /api/auth/yahoo. Raw: ${body}`,
       );
     }
 
