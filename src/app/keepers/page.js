@@ -1,6 +1,6 @@
 import Header from "@/components/header";
 import { createClient } from "@/lib/supabase/server";
-import KeepersClient from "../components/keepersClient.js";
+import KeepersClient from "../../components/keepersClient.js";
 
 export default async function Keepers() {
   const supabase = await createClient();

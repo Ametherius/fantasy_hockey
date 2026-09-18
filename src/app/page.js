@@ -3,7 +3,7 @@ import Header from "@/components/header";
 import { createClient } from "@/lib/supabase/client";
 import Image from "next/image";
 import { useState } from "react";
-import Modal from "./components/modal";
+import Modal from "../components/modal";
 
 export default function Home() {
   const inputStyle = `border-2 border-black rounded-lg p-2 m-1`;
