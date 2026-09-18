@@ -9,7 +9,7 @@ export default async function Keepers() {
   return (
     <div className="flex flex-col flex-1 items-center font-sans bg-white dark:bg-black">
       <Header />
-      <main className="grid grid-cols-4 w-full h-full py-32 px-16 bg-white dark:bg-black sm:items-start">
+      <main className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 w-full h-full py-32 px-16 bg-white dark:bg-black sm:items-start">
         <KeepersClient keepers={keepers} />
       </main>
     </div>
