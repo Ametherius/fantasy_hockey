@@ -1,7 +1,7 @@
 "use client";
-import CircleButton from "./circleButton.js";
+import CircleButton from "../components/circleButton";
 import { FaList } from "react-icons/fa";
-import Modal from "../app/components/modal.js";
+import Modal from "../components/modal.js";
 import { useState } from "react";
 
 export default function KeepersClient({ keepers }) {
