@@ -1,9 +1,9 @@
 "use client";
 import Header from "@/components/header";
 import { createClient } from "@/lib/supabase/client";
-import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../components/modal";
+import { redirect } from "next/navigation";
 
 export default function Home() {
   const inputStyle = `border-2 border-black rounded-lg p-2 m-1`;
@@ -17,6 +17,24 @@ export default function Home() {
   const supabase = createClient();
   const [status, setStatus] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [user, setUser] = useState(null);
+  const { data } = supabase.auth.getClaims();
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: data }) => setUser(data.user));
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) =>
+      setUser(session?.user ?? null),
+    );
+
+    return () => subscription.unsubscribe();
+  });
+
+  if (!data?.claims) {
+    redirect("/login");
+  }
 
   async function handleSubmission(e) {
     e.preventDefault();
