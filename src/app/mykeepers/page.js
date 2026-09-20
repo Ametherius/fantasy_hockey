@@ -32,9 +32,9 @@ export default async function MyKeepers() {
   }
 
   return (
-    <div className="flex flex-col flex-1 items-center font-sans bg-white dark:bg-black">
+    <div className="flex min-h-screen min-w-0 flex-col items-center overflow-x-hidden font-sans bg-white dark:bg-black">
       <Header />
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center py-10 px-6 bg-white dark:bg-black">
+      <main className="flex w-full max-w-3xl min-w-0 flex-1 flex-col items-center bg-white px-3 py-6 sm:px-6 sm:py-10 dark:bg-black">
         <MyKeepersClient
           keepers={keepers}
           teamName={teamName}

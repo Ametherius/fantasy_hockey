@@ -35,7 +35,8 @@ export default function MyKeepersClient({
   const [message, setMessage] = useState(null);
 
   const canDelete = keepers.length > 1;
-  const inputClass = "border-2 border-black rounded-lg p-2 w-full text-black";
+  const inputClass =
+    "border-2 border-black rounded-lg p-2 w-full min-w-0 text-black text-base";
   const formGroup = "flex flex-col gap-1 mb-3";
 
   function updateDraft(id, field, value) {
@@ -110,8 +111,8 @@ export default function MyKeepersClient({
 
   if (!keepers.length) {
     return (
-      <div className="w-full max-w-xl p-6 text-center">
-        <p className="text-lg">
+      <div className="w-full max-w-xl px-2 py-4 text-center sm:p-6">
+        <p className="text-base sm:text-lg break-words">
           No keeper submissions found for team{" "}
           <strong>{teamName || "(no team name on profile)"}</strong>.
         </p>
@@ -120,12 +121,14 @@ export default function MyKeepersClient({
   }
 
   return (
-    <div className="w-full max-w-2xl flex flex-col gap-8 py-6">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold">My Keepers</h2>
-        <p className="text-sm text-gray-600 mt-1">Team: {teamName}</p>
+    <div className="flex w-full min-w-0 max-w-2xl flex-col gap-6 py-2 sm:gap-8 sm:py-6">
+      <div className="px-1 text-center">
+        <h2 className="text-xl font-bold sm:text-2xl">My Keepers</h2>
+        <p className="mt-1 break-words text-sm text-gray-600">
+          Team: {teamName}
+        </p>
         {!canDelete && (
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="mt-2 text-xs text-gray-500">
             Delete is available when you have more than one submission.
           </p>
         )}
@@ -133,7 +136,7 @@ export default function MyKeepersClient({
 
       {message && (
         <p
-          className={`text-center font-semibold ${
+          className={`px-1 text-center text-sm font-semibold sm:text-base ${
             message.type === "error" ? "text-red-600" : "text-green-700"
           }`}
         >
@@ -146,16 +149,16 @@ export default function MyKeepersClient({
         return (
           <div
             key={k.id}
-            className="border-2 border-black rounded-xl p-4 bg-white"
+            className="min-w-0 rounded-xl border-2 border-black bg-white p-3 sm:p-4 md:p-6"
           >
-            <div className="flex justify-between items-center mb-4 border-b-2 border-black pb-2">
-              <h3 className="font-bold text-xl">
+            <div className="mb-4 flex flex-col gap-3 border-b-2 border-black pb-2 sm:flex-row sm:items-center sm:justify-between">
+              <h3 className="text-lg font-bold sm:text-xl">
                 Submission {index + 1}
               </h3>
               {canDelete && (
                 <button
                   type="button"
-                  className="bg-white border-2 border-black text-black px-3 py-1 hover:bg-black hover:text-white cursor-pointer"
+                  className="w-full cursor-pointer border-2 border-black bg-white px-3 py-2 text-black hover:bg-black hover:text-white sm:w-auto sm:py-1"
                   disabled={deletingId === k.id}
                   onClick={() => handleDelete(k.id)}
                 >
@@ -176,23 +179,25 @@ export default function MyKeepersClient({
               />
             </div>
 
-            {PICK_FIELDS.map((field, i) => (
-              <div key={field} className={formGroup}>
-                <label>Pick {i + 1}</label>
-                <input
-                  type="text"
-                  className={inputClass}
-                  value={draft[field] ?? ""}
-                  onChange={(e) => updateDraft(k.id, field, e.target.value)}
-                  placeholder="Round - Player Name"
-                />
-              </div>
-            ))}
+            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
+              {PICK_FIELDS.map((field, i) => (
+                <div key={field} className={formGroup}>
+                  <label>Pick {i + 1}</label>
+                  <input
+                    type="text"
+                    className={inputClass}
+                    value={draft[field] ?? ""}
+                    onChange={(e) => updateDraft(k.id, field, e.target.value)}
+                    placeholder="Round - Player Name"
+                  />
+                </div>
+              ))}
+            </div>
 
-            <div className="flex justify-center mt-4">
+            <div className="mt-4 flex justify-center">
               <button
                 type="button"
-                className="bg-black text-white px-6 py-2 cursor-pointer hover:bg-white hover:text-black hover:border-2 hover:border-black"
+                className="w-full cursor-pointer bg-black px-6 py-2.5 text-white hover:border-2 hover:border-black hover:bg-white hover:text-black sm:w-auto"
                 disabled={savingId === k.id}
                 onClick={() => handleSave(k.id)}
               >
