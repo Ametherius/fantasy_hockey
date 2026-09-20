@@ -3,7 +3,7 @@ import Header from "@/components/header";
 import { createClient } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";
 import Modal from "../components/modal";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const inputStyle = `border-2 border-black rounded-lg p-2 m-1`;
@@ -18,23 +18,24 @@ export default function Home() {
   const [status, setStatus] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [user, setUser] = useState(null);
-  const { data } = supabase.auth.getClaims();
+  const router = useRouter();
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: data }) => setUser(data.user));
-
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user);
+      if (!data.user) router.replace("/login");
+    });
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) =>
-      setUser(session?.user ?? null),
-    );
-
-    return () => subscription.unsubscribe();
-  });
-
-  if (!data?.claims) {
-    redirect("/login");
-  }
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      if (!session?.user) router.replace("/");
+    });
+    return function () {
+      subscription.unsubscribe();
+    };
+  }, [router]);
+  if (!user) return null;
 
   async function handleSubmission(e) {
     e.preventDefault();
@@ -47,6 +48,7 @@ export default function Home() {
       pick4: pick4.trim() || null,
       pick5: pick5.trim() || null,
       pick6: pick6.trim() || null,
+      user_id: user.id,
     });
     setSubmitting(false);
     setTeamName("");

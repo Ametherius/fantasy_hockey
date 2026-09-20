@@ -1,26 +1,16 @@
 import Header from "@/components/header";
 import { createClient } from "@/lib/supabase/server";
 import KeepersClient from "../../components/keepersClient.js";
+import { redirect } from "next/navigation.js";
 
 export default async function Keepers() {
   const supabase = await createClient();
-  const { data: keepers, error } = await supabase.from("keepers").select("*");
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data: data }) => setUser(data.user));
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) =>
-      setUser(session?.user ?? null),
-    );
-
-    return () => subscription.unsubscribe();
-  });
-
+  const { data } = await supabase.auth.getClaims();
   if (!data?.claims) {
     redirect("/login");
   }
-
+  const { data: keepers, error } = await supabase.from("keepers").select("*");
   return (
     <div className="flex flex-col flex-1 items-center font-sans bg-white dark:bg-black">
       <Header />

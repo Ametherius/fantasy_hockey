@@ -2,6 +2,7 @@
 
 import Modal from "@/components/modal";
 import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -12,6 +13,8 @@ export default function Login() {
   const [name, setName] = useState("");
   const [teamName, setTeamName] = useState("");
   const [showPass, setShowPass] = useState(false);
+  const [status, setStatus] = useState(null);
+  const router = useRouter();
   const supabase = createClient();
 
   async function handleCreateAccount() {
@@ -19,18 +22,28 @@ export default function Login() {
       email,
       password,
       options: {
-        emailRedirectTo: "https://fantasy-hockey-rho.vercel.app/auth/callback",
+        emailRedirectTo: "https://fantasy-hockey-rho.vercel.app",
         data: {
           name: name,
           teamName: teamName,
         },
       },
     });
-    if (error) return;
+    if (error) {
+      setStatus({
+        type: "error",
+        message: error.message || `There was an error creating your profile${error.status ? ` (${error.status})` : ""}.`,
+      });
+      return;
+    }
     setEmail("");
     setPassword("");
     setName("");
     setTeamName("");
+    setStatus({
+      type: "success",
+      message: "Profile created. Check your email to confirm, then log in.",
+    });
   }
 
   async function handleLogin() {
@@ -39,11 +52,30 @@ export default function Login() {
       password,
     });
     if (error) {
-      console.error(error.message);
+      setStatus({
+        type: "error",
+        message: error.message || `There was an error logging in${error.status ? ` (${error.status})` : ""}.`,
+      });
       return;
     }
+    setStatus({
+      type: "success",
+      message: "Logged in successfully.",
+    });
     setEmail("");
     setPassword("");
+  }
+
+  function closeStatus() {
+    const wasSuccess = status?.type === "success";
+    const wasLogin = registered;
+    setStatus(null);
+    if (!wasSuccess) return;
+    if (wasLogin) {
+      router.push("/");
+      return;
+    }
+    setRegistered(true);
   }
 
   const formGroup = `m-2 my-auto p-1`;
@@ -182,6 +214,30 @@ export default function Login() {
             </div>
           </Modal>
         </>
+      )}
+      {status?.type === "success" && (
+        <Modal>
+          <p className="m-4 font-bold text-2xl text-center">{status.message}</p>
+          <button
+            type="button"
+            className="bg-black text-white p-2 px-6 font-bold"
+            onClick={closeStatus}
+          >
+            Close
+          </button>
+        </Modal>
+      )}
+      {status?.type === "error" && (
+        <Modal>
+          <p className="m-4 font-bold text-2xl text-center">{status.message}</p>
+          <button
+            type="button"
+            className="bg-black text-white p-2 px-6 font-bold"
+            onClick={() => setStatus(null)}
+          >
+            Close
+          </button>
+        </Modal>
       )}
     </div>
   );
