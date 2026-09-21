@@ -1,11 +1,10 @@
 import Header from "@/components/header";
 import { createClient } from "@/lib/supabase/server";
 import KeepersClient from "../../components/keepersClient.js";
-import { redirect } from "next/navigation.js";
+import { redirect, useRouter } from "next/navigation.js";
 
 export default async function Keepers() {
   const supabase = await createClient();
-
   const { data } = await supabase.auth.getClaims();
   if (!data?.claims) {
     redirect("/login");
