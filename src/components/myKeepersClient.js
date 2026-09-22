@@ -173,9 +173,7 @@ export default function MyKeepersClient({
                 type="text"
                 className={inputClass}
                 value={draft.team_name ?? ""}
-                onChange={(e) =>
-                  updateDraft(k.id, "team_name", e.target.value)
-                }
+                onChange={(e) => updateDraft(k.id, "team_name", e.target.value)}
               />
             </div>
 
@@ -198,7 +196,7 @@ export default function MyKeepersClient({
               <button
                 type="button"
                 className="w-full cursor-pointer bg-black px-6 py-2.5 text-white hover:border-2 hover:border-black hover:bg-white hover:text-black sm:w-auto"
-                disabled={savingId === k.id}
+                disabled="true"
                 onClick={() => handleSave(k.id)}
               >
                 {savingId === k.id ? "Saving..." : "Save Changes"}

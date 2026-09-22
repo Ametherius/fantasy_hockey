@@ -27,7 +27,7 @@ export default function KeepersClient({ keepers }) {
 
         return (
           <div key={k.id} className="w-full p-2 h-[calc(100vh - 3rem)]">
-            <div className="bg-white blur-xs">
+            <div>
               <div className=" bg-white p-3 flex justify-center border-b-2 border-black">
                 <h1 className="text-black font-bold text-2xl">{k.team_name}</h1>
               </div>
