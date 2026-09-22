@@ -56,7 +56,7 @@ export default function ScheduleClient({ scores }) {
               />
             </div>
           );
-        } else if (g.gameState === "FUT") {
+        } else if (g.gameState === "FUT" || g.gameState === "PRE") {
           return (
             <div
               key={g.id}
@@ -68,7 +68,8 @@ export default function ScheduleClient({ scores }) {
                 odds={g.awayTeam.odds ? `${awayTeam.odds}` : ""}
               />
               <div className={middleStyle}>
-                <span>VS</span>
+                {g.gameState === "FUT" && <span>VS</span>}
+                {g.gameState === "PRE" && <span>PRE</span>}
                 <span className="text-xs">{formatET(g.startTimeUTC)} ET</span>
               </div>
               <HomeTeam
@@ -91,11 +92,15 @@ export default function ScheduleClient({ scores }) {
               />
               <div className={middleStyle}>
                 {g.periodDescriptor.number <= 3 && (
-                  <span>{g.periodDescriptor.number}</span>
+                  <span>Period {g.periodDescriptor.number}</span>
                 )}
                 {g.periodDescriptor.number > 3 && (
                   <span>{g.periodDescriptor.periodType}</span>
                 )}
+                {g.gameState === "LIVE" ||
+                  (g.gameState === "CRIT" && (
+                    <span>{g.clock?.timeRemaining}</span>
+                  ))}
               </div>
               <HomeTeam
                 abbrev={homeTeam.abbrev}
