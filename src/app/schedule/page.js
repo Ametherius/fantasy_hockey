@@ -45,7 +45,7 @@ export default async function Schedule() {
 
   // console.log(scheduleData);
   return (
-    <div className="flex flex-col flex-1 items-center font-sans bg-white dark:bg-black sm:w-full md:w-full lg:w-full">
+    <div className="flex flex-col flex-1 items-center font-sans bg-white dark:bg-black sm:w-full md:w-full lg:w-full overflow-x-hidden">
       <Header />
       <div className="text-center text-white my-8 font-bold">
         <h1 className="text-4xl">Today's Schedule</h1>

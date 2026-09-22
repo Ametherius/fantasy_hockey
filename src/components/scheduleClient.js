@@ -38,7 +38,7 @@ export default function ScheduleClient({ scores }) {
           return (
             <div
               key={g.id}
-              className="m-4 flex flex-1 g-0 items-center justify-center"
+              className="m-4 flex g-0 items-center justify-center"
             >
               <AwayTeam
                 abbrev={awayTeam.abbrev}
@@ -60,7 +60,7 @@ export default function ScheduleClient({ scores }) {
           return (
             <div
               key={g.id}
-              className="m-4 flex flex-1 g-0 items-center justify-center"
+              className="m-4 flex g-0 items-center justify-center"
             >
               <AwayTeam
                 abbrev={awayTeam.abbrev}
@@ -82,7 +82,7 @@ export default function ScheduleClient({ scores }) {
           return (
             <div
               key={g.id}
-              className="m-4 flex flex-1 g-0 items-center justify-center"
+              className="m-4 flex g-0 items-center justify-center"
             >
               <AwayTeam
                 abbrev={awayTeam.abbrev}

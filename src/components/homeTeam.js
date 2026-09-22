@@ -1,12 +1,12 @@
 "use client";
 export default function HomeTeam({ abbrev, logo, odds = "", score = "" }) {
   return (
-    <div className="bg-white rounded-r-xl flex flex-1 transform -skew-x-10 h-16 my-2">
-      <div className="bg-black border-2 px-6 border-white flex justify-center items-center max-w-24 min-w-20 text-white text-2xl">
+    <div className="bg-white rounded-r-xl flex transform -skew-x-10 h-16 my-2">
+      <div className="bg-black border-2 px-6 border-white flex justify-center items-center text-white text-2xl min-w-12 sm:min-w-20 sm:px-6 sm:text-lg">
         <span>{odds}</span>
         <span>{score}</span>
       </div>
-      <div className="flex justify-center items-center shrink-0">
+      <div className="flex justify-center items-center">
         <img
           src={logo}
           alt={`Logo for ${abbrev}`}
