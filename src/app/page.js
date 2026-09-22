@@ -157,7 +157,7 @@ export default function Home() {
                   type="submit"
                   className="bg-black p-3 text-white mt-3 cursor-pointer"
                   onClick={handleSubmission}
-                  disabled="true"
+                  disabled={true}
                 >
                   Submit Keepers
                 </button>
