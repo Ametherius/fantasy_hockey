@@ -16,7 +16,7 @@ export default function ScheduleClient({ scores }) {
       .replace(" ", "");
   }
   const middleStyle =
-    "bg-white transform -skew-x-10 h-16 my-2 min-w-14 max-w-20 flex justify-center flex-col shrink-0 items-center p-1 font-bold";
+    "bg-white transform -skew-x-10 h-16 my-2 min-w-14 max-w-20 flex justify-center flex-col shrink-0 items-center p-1 font-bold sm:min-w-14";
   return (
     <div className="grid sm:grid-cols-1 md:grid-cols-2 w-full p-4">
       {scores.map((g) => {
