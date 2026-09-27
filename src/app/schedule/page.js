@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 export default async function Schedule() {
+  const url = "https://api-web.nhle.com/v1/";
   const supabase = await createClient();
   const { data } = await supabase.auth.getClaims();
   if (!data?.claims) {
@@ -14,7 +15,7 @@ export default async function Schedule() {
 
   async function getSchedule() {
     try {
-      const result = await fetch("https://api-web.nhle.com/v1/schedule/now");
+      const result = await fetch(`${url}schedule/now`);
       const scheduleData = await result.json();
 
       const currentWeek = scheduleData.gameWeek[0];
@@ -29,7 +30,7 @@ export default async function Schedule() {
 
   async function getScores() {
     try {
-      const res = await fetch("https://api-web.nhle.com/v1/score/now");
+      const res = await fetch(`${url}score/now`);
       const data = await res.json();
 
       const games = data.games ?? [];
@@ -38,7 +39,7 @@ export default async function Schedule() {
     } catch (err) {}
   }
 
-  const games = await getSchedule();
+  // const games = await getSchedule();
   const scores = await getScores();
 
   // console.log(scores);
@@ -51,7 +52,7 @@ export default async function Schedule() {
         <h1 className="text-4xl">Today's Schedule</h1>
       </div>
       <div className="flex justify-center">
-        <ScheduleClient games={games} scores={scores} />
+        <ScheduleClient scores={scores} />
       </div>
     </div>
   );
